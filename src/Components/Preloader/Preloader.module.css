@@ -1,0 +1,13 @@
+.errorWrapper {
+    font-size: 20px;
+    width: 100%;
+    min-height: calc(100vh - 81px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.errorLogo {
+    margin-right: 20px;
+    color: #FC2F70;
+    font-size: 28px;
+}
