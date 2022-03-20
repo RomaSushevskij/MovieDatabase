@@ -1,0 +1,39 @@
+.previewWrapper {
+    font-family: Poppins,sans-serif;
+    color: #FFFFFF;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.posterAndDescription .poster {
+    width: 200px;
+    height: 300px;
+}
+.posterAndDescription .poster img {
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s ease;
+}
+.posterAndDescription .poster img:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(252, 47, 112, 0.5);
+    cursor: pointer;
+}
+.posterAndDescription .description {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+}
+.posterAndDescription .description .yearLogo {
+    color:#3CEFFF;
+    margin-right: 10px;
+    font-size: 16px;
+}
+.posterAndDescription .description .year, .type, .imdbID {
+    margin: 5px 0;
+}
