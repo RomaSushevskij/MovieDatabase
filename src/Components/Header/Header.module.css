@@ -1,0 +1,19 @@
+.search_bar {
+    height: 80px;
+    background-color: #090821;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.search_bar .logo {
+    color: #fc2f70;
+    font-size: 30px;
+    margin: 0 30px
+}
+
+.border {
+    height: 1px;
+    background: linear-gradient(90deg, rgb(45, 233, 251), rgb(253, 45, 111));
+}

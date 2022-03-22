@@ -1,0 +1,11 @@
+.defaultPosterWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.posterLogo {
+    color: #3CEFFF;
+    font-size: 80px;
+}

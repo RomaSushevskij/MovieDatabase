@@ -1,28 +1,28 @@
 import style from './FilmPreview.module.css'
-import {faCalendar, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faCalendar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
+import {NavLink} from "react-router-dom";
+import {FilmType} from "../../App";
+import {DefaultPoster} from "../DefaultPoster/DefaultPoster";
 
-type FilmPreview = {
-    Title: string
-    Poster: string
-    Year: string
-    Type: string
-    imdbID: string
-}
+type FilmPreviewType = FilmType
 export const FilmPreview = ({
                                 Title,
                                 Poster,
                                 Year,
                                 Type,
                                 imdbID,
-                            }: FilmPreview) => {
+                            }: FilmPreviewType) => {
     return (
         <div className={style.previewWrapper}>
             <h4>Title: {Title}</h4>
             <div className={style.posterAndDescription}>
                 <div className={style.poster}>
-                    <img src={Poster}/>
+                    <NavLink to={`/filmPage/${imdbID}`}>
+                        {Poster === "N/A" ? DefaultPoster: <img src={Poster} alt={'Poster'}/>}
+
+                    </NavLink>
                 </div>
                 <div>
                     <div className={style.description}>

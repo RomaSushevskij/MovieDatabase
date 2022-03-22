@@ -1,4 +1,4 @@
-import React, {ChangeEvent, InputHTMLAttributes, DetailedHTMLProps} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
 import style from './RadioButton.module.css'
 
 type DefaultRadioPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -30,7 +30,7 @@ const RadioButton: React.FC<RadioButtonPropsType> = (
                    checked={o === value}
                    value={o}
                    onChange={onChangeCallback}/>
-            <span style={{color:`${o === value ? '#fc2f70' : '#9F9F9F'}`}}>{o}</span>
+            <span style={{color: `${o === value ? '#fc2f70' : '#9F9F9F'}`}}>{o}</span>
         </label>
     )) : []
 
