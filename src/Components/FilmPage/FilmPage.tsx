@@ -4,17 +4,15 @@ import {
     faBookOpen,
     faCalendar,
     faEarthAmericas,
-    faFilm,
     faHourglass,
     faLanguage,
-    faReply,
     faStar
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, {useEffect} from "react";
 import {PATH} from "../../App";
 import {useNavigate, useParams} from 'react-router-dom'
-import {DefaultPoster} from "../DefaultPoster/DefaultPoster";
+import {DefaultPoster} from "../generic/DefaultPoster/DefaultPoster";
 
 
 export type FilmItemType = {
@@ -43,8 +41,6 @@ export const FilmPage = ({
                              filmsData,
                              getFilmsData,
                          }: FilmPageType) => {
-    debugger
-
     let {
         Title,
         Year,

@@ -5,20 +5,22 @@ const configOMB = {
 };
 const key = 'fa23d3a3';
 const axiosInstance = axios.create(configOMB);
-//['All', 'Movie', 'Series', 'Episode']
 const API = {
     searchFilmsByTitle: (title: string, typeValue: string) => {
         const type = `${typeValue === 'All' ? '' : `&type=${typeValue.toLowerCase()}`}`
         return axiosInstance.get(`/?apikey=${key}&s=${title}${type}`)
             .then(response => {
+                debugger
                 return response.data
+            })
+            .catch(error=> {
+                console.log(error)
             })
     },
     getFilmsData: (imdbID: string, typeValue: string) => {
         const type = `${typeValue === 'All' ? '' : `&type=${typeValue.toLowerCase()}`}`
         return axiosInstance.get(`/?apikey=${key}&i=${imdbID}${type}`)
             .then(response => {
-                debugger
                 const {Title,
                     Year,
                     Runtime,
@@ -48,6 +50,7 @@ const API = {
                     Response,
                     imdbID,}
             })
+            .catch(error => console.log(error))
     }
 };
 

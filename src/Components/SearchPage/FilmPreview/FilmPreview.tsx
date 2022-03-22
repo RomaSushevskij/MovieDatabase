@@ -3,8 +3,8 @@ import {faCalendar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {FilmType} from "../../App";
-import {DefaultPoster} from "../DefaultPoster/DefaultPoster";
+import {FilmType} from "../../../App";
+import {DefaultPoster} from "../../generic/DefaultPoster/DefaultPoster";
 
 type FilmPreviewType = FilmType
 export const FilmPreview = ({

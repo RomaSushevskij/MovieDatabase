@@ -8,20 +8,21 @@ import RadioButton from "./RadioButton/RadioButton";
 import {FilmsOptionsType} from "../../App";
 
 type HeaderPropsType = {
-        filmsTypes: string[]
+    filmsTypes: string[]
     optionTypeValue: FilmsOptionsType
-    searchFilm: (searchName: string, typeValue: FilmsOptionsType) => void
-    onChangeTypeValue: (optionTypeValue: FilmsOptionsType) => void
+    getFilmsList: (searchName: string, typeValue: FilmsOptionsType) => void
+    changeOptionValue: (optionTypeValue: FilmsOptionsType) => void
 }
 
 export const Header = ({
                            filmsTypes,
                            optionTypeValue,
-                           searchFilm,
-                           onChangeTypeValue,
+                           getFilmsList,
+                           changeOptionValue,
+
                        }: HeaderPropsType) => {
     const onEnterKeyPressHandler = (inputValue: string) => {
-        searchFilm(inputValue, optionTypeValue)
+        getFilmsList(inputValue, optionTypeValue)
     }
 
     return (
@@ -30,12 +31,12 @@ export const Header = ({
                 <div className={style.search_bar}>
                     <FontAwesomeIcon icon={faFilm} className={style.logo}/>
                     <Input
-                           placeHolder={"Movie search"}
-                           onEnter={onEnterKeyPressHandler}/>
+                        placeHolder={"Movie search"}
+                        onEnter={onEnterKeyPressHandler}/>
                     <RadioButton name={'radio'}
                                  options={filmsTypes}
                                  value={optionTypeValue}
-                                 onChangeOption={onChangeTypeValue}/>
+                                 onChangeOption={changeOptionValue}/>
                 </div>
             </div>
             <div className={style.border}></div>
