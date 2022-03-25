@@ -1,37 +1,29 @@
 import {
     changeOptionTypeValue,
     FilmItemType,
-    FilmsOptionsType,
     FilmType,
-    initialStateType,
-    searchFilmsReducer, setFilmsData, setIsFetchingValue, setSearchError, setSearchResult
+    searchFilmsInitialState,
+    SearchFilmsInitialStateType,
+    searchFilmsReducer,
+    setCurrentPage,
+    setFilmsData,
+    setIsFetchingValue,
+    setSearchedMovieTitle,
+    setSearchError,
+    setSearchResult,
+    setTotalFilmsCount
 } from "./searchFilmsReducer";
 
-let startState: initialStateType
-beforeEach(()=>{
-    startState = {
-        searchResult: [] as FilmType[],
-        searchError: '',
-        filmsTypes: ['All', 'Movie', 'Series', 'Episode'] as FilmsOptionsType[],
-        optionTypeValue: 'All' as FilmsOptionsType,
-        filmsData: {
-            "Title": "Title",
-            "Year": "Year",
-            "Runtime": "Runtime",
-            "Genre": "Genre",
-            "Director": "Director",
-            "Actors": "Actors",
-            "Plot": "Plot",
-            "Language": "Language",
-            "Country": "Country",
-            "Poster": "Poster",
-            "Metascore": "Metascore",
-            "imdbRating": "imdbRating",
-            "Response": "Response",
-            "imdbID":"imdbID",
-        } as FilmItemType,
-        isFetching: false,
-    }
+let startState: SearchFilmsInitialStateType
+beforeEach(() => {
+    startState = searchFilmsInitialState
+})
+test('correct title of searched film should be add to state', () => {
+    const filmTitle = 'Lord of the rings'
+    const endState = searchFilmsReducer(startState, setSearchedMovieTitle(filmTitle))
+
+    expect(startState.searchedMovieTitle).toBe("")
+    expect(endState.searchedMovieTitle).toBe(filmTitle)
 })
 
 test('option type should change', () => {
@@ -41,8 +33,25 @@ test('option type should change', () => {
     expect(endState.optionTypeValue).toBe("Movie")
 })
 
+test('correct totalResults of searched films should be add to state', () => {
+    const totalResults = '725'
+    const endState = searchFilmsReducer(startState, setTotalFilmsCount(Number(totalResults)))
+
+    expect(startState.totalFilmsCount).toBe(0)
+    expect(endState.totalFilmsCount).toBe(725)
+})
+
+test('currentPage should be correct', () => {
+    const pageNumber = 3
+    const endState = searchFilmsReducer(startState, setCurrentPage(pageNumber))
+
+    expect(startState.currentPage).toBe(1)
+    expect(endState.currentPage).toBe(3)
+})
+
+
 test(' data about found movies should be added to the state', () => {
-    const films:FilmType[] =
+    const films: FilmType[] =
         [
             {
                 "Title": "The Matrix",
@@ -73,7 +82,7 @@ test(' data about found movies should be added to the state', () => {
 
 })
 test(' data about found film should be added to the state', () => {
-    const film:FilmItemType = {
+    const film: FilmItemType = {
         Actors: "Emilia Clarke, Peter Dinklage, Kit Harington",
         Country: "United States, United Kingdom",
         Director: "N/A",
@@ -92,7 +101,7 @@ test(' data about found film should be added to the state', () => {
 
     const endState = searchFilmsReducer(startState, setFilmsData(film))
 
-    expect(startState.filmsData).toStrictEqual({
+    expect(startState.filmsData).toEqual({
         "Title": "Title",
         "Year": "Year",
         "Runtime": "Runtime",
@@ -105,10 +114,9 @@ test(' data about found film should be added to the state', () => {
         "Poster": "Poster",
         "Metascore": "Metascore",
         "imdbRating": "imdbRating",
-        "Response": "Response",
-        "imdbID":"imdbID",
+        "imdbID": "imdbID",
     })
-    expect(endState.filmsData).toStrictEqual(film)
+    expect(endState.filmsData).toEqual(film)
 })
 
 test('correct search error should be add to state', () => {

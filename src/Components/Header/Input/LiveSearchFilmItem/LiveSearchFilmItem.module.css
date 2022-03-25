@@ -1,0 +1,32 @@
+.liveSearchFilmWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 5px 1px 5px;
+    border-bottom: 1px solid  #fc2f70;
+    min-height: 57px;
+    transition: all .3s ease;
+}
+.liveSearchFilmWrapper:hover {
+    background-color: rgba(252, 47, 112,0.1);
+    transition: all .3s ease;
+}
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.poster{
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.poster img {
+    width: 100%;
+}
+.posterLogo {
+    color: #3CEFFF;
+    margin-left: 5px;
+}
+h5 {
+    margin: 0;
+}

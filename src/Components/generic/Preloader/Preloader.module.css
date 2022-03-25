@@ -5,10 +5,13 @@
     justify-content: center;
     align-items: center;
 }
+.preloaderWrapper.preloaderWrapperInLiveSearch {
+    min-height: 70px;
+}
 
 .preloaderBody {
-    width: 3em;
-    height: 3.5em;
+    width: 2em;
+    height: 2.5em;
     border: 3px solid transparent;
     border-top-color: #fc2f70;
     border-bottom-color: #fc2f70;

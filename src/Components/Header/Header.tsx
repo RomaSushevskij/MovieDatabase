@@ -5,7 +5,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFilm} from '@fortawesome/free-solid-svg-icons'
 import {Input} from "./Input/Input";
 import RadioButton from "./RadioButton/RadioButton";
-import {FilmsOptionsType} from "../../App";
+import {InputContainer} from "./Input/InputContainer";
+import {FilmsOptionsType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 
 type HeaderPropsType = {
     filmsTypes: string[]
@@ -30,7 +31,7 @@ export const Header = ({
             <div className={styleContainer.container}>
                 <div className={style.search_bar}>
                     <FontAwesomeIcon icon={faFilm} className={style.logo}/>
-                    <Input
+                    <InputContainer
                         placeHolder={"Movie search"}
                         onEnter={onEnterKeyPressHandler}/>
                     <RadioButton name={'radio'}

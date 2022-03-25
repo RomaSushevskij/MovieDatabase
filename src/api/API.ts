@@ -4,53 +4,23 @@ const configOMB = {
     baseURL: 'http://www.omdbapi.com',
 };
 const key = 'fa23d3a3';
+export let source: ReturnType<typeof axios.CancelToken.source>;
 const axiosInstance = axios.create(configOMB);
 const API = {
-    searchFilmsByTitle: (title: string, typeValue: string) => {
+    searchFilmsByTitle: (title: string, typeValue: string, pageNumber = 1) => {
         const type = `${typeValue === 'All' ? '' : `&type=${typeValue.toLowerCase()}`}`
-        return axiosInstance.get(`/?apikey=${key}&s=${title}${type}`)
-            .then(response => {
-                debugger
-                return response.data
-            })
-            .catch(error=> {
-                console.log(error)
-            })
+        const query = `?apikey=${key}&s=${title}${type}&page=${pageNumber}`
+        source = axios.CancelToken.source()
+        return axiosInstance.get(query, {
+            cancelToken: source.token
+        })
     },
     getFilmsData: (imdbID: string, typeValue: string) => {
         const type = `${typeValue === 'All' ? '' : `&type=${typeValue.toLowerCase()}`}`
-        return axiosInstance.get(`/?apikey=${key}&i=${imdbID}${type}`)
-            .then(response => {
-                const {Title,
-                    Year,
-                    Runtime,
-                    Genre,
-                    Director,
-                    Actors,
-                    Plot,
-                    Language,
-                    Country,
-                    Poster,
-                    Metascore,
-                    imdbRating,
-                    Response,
-                    imdbID,} = response.data
-                return {Title,
-                    Year,
-                    Runtime,
-                    Genre,
-                    Director,
-                    Actors,
-                    Plot,
-                    Language,
-                    Country,
-                    Poster,
-                    Metascore,
-                    imdbRating,
-                    Response,
-                    imdbID,}
-            })
-            .catch(error => console.log(error))
+        source = axios.CancelToken.source()
+        return axiosInstance.get(`/?apikey=${key}&i=${imdbID}${type}`, {
+            cancelToken: source.token
+        })
     }
 };
 

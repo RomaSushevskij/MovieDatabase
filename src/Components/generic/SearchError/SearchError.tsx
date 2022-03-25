@@ -5,10 +5,16 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export type MovieNotFoundType = {
     searchError: string
+    inLiveSearch?:boolean
+
 }
-export const SearchError = ({searchError}: MovieNotFoundType) => {
+export const SearchError = ({searchError,
+                                inLiveSearch}: MovieNotFoundType) => {
+    const classNameWrapper = inLiveSearch ?
+        `${style.errorWrapper} ${style.errorWrapperInLiveSearch}` :
+        style.errorWrapper
     return (
-        <div className={style.errorWrapper}>
+        <div className={classNameWrapper}>
             <FontAwesomeIcon icon={faTriangleExclamation}
                              className={style.errorLogo}/>
             {searchError}

@@ -1,45 +1,76 @@
-import React from 'react'
-import {FilmsOptionsType} from "../../App";
+import React, {useEffect, useState} from 'react'
+import { PATH} from "../../App";
 import {AppActionsType, AppStateType, AppThunk} from "../../store/store";
 import {Header} from "./Header";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    changeOptionTypeValue,
-    setIsFetchingValue, setSearchError,
-    setSearchResult
-} from "../../store/reducers/searchFilmsReducer";
+    changeOptionTypeValue, FilmsOptionsType,
+    setIsFetchingValue, setSearchedMovieTitle, setSearchError,
+    setSearchResult, setTotalFilmsCount
+} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {Dispatch} from "redux";
 import API from "../../api/API";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 export const HeaderContainer = () => {
+
+    const [onSearchPage, setOnSearchPage] = useState(false)
     const {
         filmsTypes,
         optionTypeValue,
+        searchError,
+        searchResult,
+        searchedMovieTitle,
     } = useSelector((state: AppStateType) => {
         return state.filmsSearch
     })
     const dispatch = useDispatch<Dispatch<AppActionsType>>()
+    const location = useLocation();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (location.pathname === "/searchPage/*") {
+            setOnSearchPage(true)
+        } else {
+            setOnSearchPage(false)
+        }
+    }, [location.pathname])
+
     // T H U N K S
-    const getFilmsList = (title: string, typeValue: FilmsOptionsType) => {
+    const innerGetFilmsList = (title: string, typeValue: FilmsOptionsType) => {
         dispatch(setIsFetchingValue(true))
         API.searchFilmsByTitle(title, typeValue)
-            .then(data => {
-                debugger
+            .then(({data }) => {
+                const {Response, Search, Error, totalResults} = data
                 dispatch(setIsFetchingValue(false))
-                if (data.Response === 'True') {
-                    dispatch(setSearchResult(data.Search))
+                if (Response === 'True') {
+                    dispatch(setSearchedMovieTitle(title))
+                    dispatch(setTotalFilmsCount(Number(totalResults)))
+                    dispatch(setSearchResult(Search))
+                    searchError && dispatch(setSearchError(''))
                 } else {
-                    dispatch(setSearchResult([]))
-                    dispatch(setSearchError(data.Error))
+                    dispatch(setSearchError(Error))
+                    dispatch(setSearchedMovieTitle(title))
+                    searchResult.length > 0 && dispatch(setSearchResult([]))
                 }
-
-
             })
+            .catch(error => {
+                console.log(error)
+                dispatch(setIsFetchingValue(false))
+                dispatch(setSearchedMovieTitle(title))
+                searchResult.length > 0 && dispatch(setSearchResult([]))
+                dispatch(setSearchError(error.response.data.Error))
+            })
+    }
+
+    const getFilmsList = (title: string, typeValue: FilmsOptionsType) => {
+        !onSearchPage && navigate((PATH.SEARCH_PAGE))
+        innerGetFilmsList(title, typeValue)
     }
 
     const changeOptionValue = (optionTypeValue: FilmsOptionsType) => {
         dispatch(changeOptionTypeValue(optionTypeValue))
+        onSearchPage && innerGetFilmsList(searchedMovieTitle, optionTypeValue)
     }
     return <Header filmsTypes={filmsTypes}
                    optionTypeValue={optionTypeValue}

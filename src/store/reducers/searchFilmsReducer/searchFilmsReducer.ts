@@ -1,5 +1,6 @@
-import {AppThunk} from "../store";
-import API from "../../api/API";
+import {AppActionsType, AppThunk} from "../../store";
+import API from "../../../api/API";
+import {Dispatch} from "redux";
 
 enum ACTIONS_TYPES {
     CHANGE_OPTION_TYPE_VALUE = 'SearchFilms/CHANGE_OPTION_TYPE_VALUE',
@@ -7,6 +8,9 @@ enum ACTIONS_TYPES {
     SET_FILMS_DATA = 'SearchFilms/SET_FILMS_DATA',
     SET_SEARCH_ERROR = 'SearchFilms/SET_SEARCH_ERROR',
     SET_IS_FETCHING_VALUE = 'SearchFilms/SET_IS_FETCHING_VALUE',
+    SET_SEARCHED_MOVIE_TITLE = 'SearchFilms/SET_SEARCHED_MOVIE_TITLE',
+    SET_TOTAL_FILMS_COUNT = 'SearchFilms/SET_TOTAL_FILMS_COUNT',
+    SET_CURRENT_PAGE = 'SearchFilms/SET_CURRENT_PAGE',
 }
 
 
@@ -34,44 +38,46 @@ export type FilmItemType = {
     "Response": string
     "imdbID": string
 }
-
-export const initialState = {
+export const defaultFilmsData = {
+    "Title": "Title",
+    "Year": "Year",
+    "Runtime": "Runtime",
+    "Genre": "Genre",
+    "Director": "Director",
+    "Actors": "Actors",
+    "Plot": "Plot",
+    "Language": "Language",
+    "Country": "Country",
+    "Poster": "Poster",
+    "Metascore": "Metascore",
+    "imdbRating": "imdbRating",
+    "imdbID": "imdbID",
+} as FilmItemType
+export const searchFilmsInitialState = {
+    searchedMovieTitle:'',
     searchResult: [] as FilmType[],
     searchError: '',
     filmsTypes: ['All', 'Movie', 'Series', 'Episode'] as FilmsOptionsType[],
     optionTypeValue: 'All' as FilmsOptionsType,
-    filmsData: {
-        "Title": "Title",
-        "Year": "Year",
-        "Runtime": "Runtime",
-        "Genre": "Genre",
-        "Director": "Director",
-        "Actors": "Actors",
-        "Plot": "Plot",
-        "Language": "Language",
-        "Country": "Country",
-        "Poster": "Poster",
-        "Metascore": "Metascore",
-        "imdbRating": "imdbRating",
-        "Response": "Response",
-        "imdbID": "imdbID",
-    } as FilmItemType,
+    filmsData: defaultFilmsData,
     isFetching: false,
+    totalFilmsCount:0,
+    currentPage: 1,
 }
-export type initialStateType = typeof initialState
+export type SearchFilmsInitialStateType = typeof searchFilmsInitialState
 
-export const searchFilmsReducer = (state = initialState, action: ActionTypeSearchFilms): initialStateType => {
+export const searchFilmsReducer = (state = searchFilmsInitialState, action: ActionTypeSearchFilms): SearchFilmsInitialStateType => {
     switch (action.type) {
         case ACTIONS_TYPES.CHANGE_OPTION_TYPE_VALUE:
         case ACTIONS_TYPES.SET_FILMS_DATA:
         case ACTIONS_TYPES.SET_SEARCH_ERROR:
         case ACTIONS_TYPES.SET_IS_FETCHING_VALUE:
+        case ACTIONS_TYPES.SET_SEARCH_RESULT:
+        case ACTIONS_TYPES.SET_SEARCHED_MOVIE_TITLE:
+        case ACTIONS_TYPES.SET_TOTAL_FILMS_COUNT:
+        case ACTIONS_TYPES.SET_CURRENT_PAGE:
             return {
                 ...state, ...action.payload
-            }
-        case ACTIONS_TYPES.SET_SEARCH_RESULT:
-            return {
-                ...state, searchResult: action.payload.searchResult
             }
         default:
             return state
@@ -82,9 +88,18 @@ export type ActionTypeSearchFilms =
     ReturnType<typeof setSearchResult> |
     ReturnType<typeof setFilmsData> |
     ReturnType<typeof setSearchError> |
-    ReturnType<typeof setIsFetchingValue>
+    ReturnType<typeof setIsFetchingValue> |
+    ReturnType<typeof setSearchedMovieTitle> |
+    ReturnType<typeof setTotalFilmsCount> |
+    ReturnType<typeof setCurrentPage>
 
 // A C T I O N  C R E A T O R S
+export const setSearchedMovieTitle = (searchedMovieTitle: string) => ({
+    type: ACTIONS_TYPES.SET_SEARCHED_MOVIE_TITLE, payload: {searchedMovieTitle}
+} as const)
+export const setTotalFilmsCount = (totalFilmsCount: number) => ({
+    type: ACTIONS_TYPES.SET_TOTAL_FILMS_COUNT, payload: {totalFilmsCount}
+} as const)
 export const changeOptionTypeValue = (optionTypeValue: FilmsOptionsType) => ({
     type: ACTIONS_TYPES.CHANGE_OPTION_TYPE_VALUE, payload: {optionTypeValue}
 } as const)
@@ -100,4 +115,8 @@ export const setSearchError = (searchError: string) => ({
 export const setIsFetchingValue = (isFetching: boolean) => ({
     type: ACTIONS_TYPES.SET_IS_FETCHING_VALUE, payload: {isFetching}
 } as const)
+export const setCurrentPage = (currentPage: number) => ({
+    type: ACTIONS_TYPES.SET_CURRENT_PAGE, payload: {currentPage}
+} as const)
+
 

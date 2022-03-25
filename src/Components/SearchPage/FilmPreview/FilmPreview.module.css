@@ -18,14 +18,12 @@
 
 .posterAndDescription .poster {
     width: 200px;
-    height: 300px;
     transition: all 0.4s ease;
     box-shadow: 0 0 15px rgba(60, 239, 255, 0.2);
 }
 
 .posterAndDescription .poster img {
     width: 100%;
-    height: 100%;
 }
 
 .posterAndDescription .description {

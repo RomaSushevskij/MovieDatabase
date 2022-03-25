@@ -4,6 +4,7 @@
 }
 
 .search input {
+    width: 300px;
     height: 30px;
     color: white;
     font-size: 20px;
@@ -42,4 +43,13 @@
 .search input:focus ~ span {
     transform: translate(-50%, 0) scaleX(1);
     opacity: 1;
+}
+
+.searchingList {
+    position: absolute;
+    width: 320px;
+    background-color: #090821;
+    border: 1px solid #fc2f70;
+    box-shadow: 0 0 15px rgba(252, 47, 112, 0.5);
+    z-index: 1;
 }
