@@ -15,5 +15,5 @@ Simple movie collection app built with React and the  OMDBAPI.
 - :sunny: API used [OMDb API](http://www.omdbapi.com/)
 
 ## Demo 
-:bowtie: Link to Demo App: 
+:bowtie: [Link to Demo App](https://RomaSushevskij.github.io/MovieDatabase) 
 
