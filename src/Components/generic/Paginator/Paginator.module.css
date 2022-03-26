@@ -25,6 +25,7 @@
     border: 1px solid #FC2F70;
     transition: all 0.3s ease;
     box-shadow: 0 0 15px rgba(252, 47, 112, 0.2);
+    border-radius: 15px;
 }
 
 .pagesToBack,
@@ -51,11 +52,12 @@
     box-shadow: 0 0 15px rgba(60, 239, 255, 0.2);
 }
 
-.paginator span:hover {
+.paginator .pageNumber:hover {
     border: 1px solid #FC2F70;
     transition: all 0.5s ease;
     color: #FC2F70;
     box-shadow: 0 0 15px rgba(252, 47, 112, 0.2);
+    border-radius: 10px;
 }
 
 .paginator .pageNumber.selectedPageNumber {
@@ -67,6 +69,7 @@
     color: #090821;
     font-weight: bold;
     box-shadow: 0 0 15px rgba(252, 47, 112, 0.3);
+    border-radius: 10px;
 }
 
 .paginator .threeDots:hover {
