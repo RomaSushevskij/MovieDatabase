@@ -17,7 +17,7 @@ export const FilmPreview = memo((props: FilmPreviewType) => {
     } = props
     return (
         <div className={style.previewWrapper}>
-            <h4>Title: {Title}</h4>
+            <h4>{Title}</h4>
             <div className={style.posterAndDescription}>
                 <div className={style.poster}>
                     <NavLink to={`/filmPage/${imdbID}`}>

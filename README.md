@@ -9,8 +9,6 @@ Simple movie collection app built with React and the  OMDBAPI.
                   - [React](https://reactjs.org/)  <br />
                   - [Redux](https://redux.js.org/)  <br />
                   - [TypeScript](https://www.typescriptlang.org/) <br />
-	              - 
-	              - 
 - :octocat: Deployed app to gitHub Pages 
 - :sunny: API used [OMDb API](http://www.omdbapi.com/)
 
