@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const configOMB = {
-    baseURL: 'http://www.omdbapi.com',
+    baseURL: 'https://www.omdbapi.com',
 };
 const key = 'fa23d3a3';
 export let source: ReturnType<typeof axios.CancelToken.source>;

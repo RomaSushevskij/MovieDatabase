@@ -42,28 +42,31 @@ export const HeaderContainer = () => {
 
     // T H U N K S
     const innerGetFilmsList = (title: string, typeValue: FilmsOptionsType) => {
-        dispatch(setIsFetchingValue(true))
-        API.searchFilmsByTitle(title, typeValue)
-            .then(({data}) => {
-                const {Response, Search, Error, totalResults} = data
-                dispatch(setIsFetchingValue(false))
-                if (Response === 'True') {
-                    dispatch(setSearchedMovieTitle(title))
-                    dispatch(setTotalFilmsCount(Number(totalResults)))
-                    dispatch(setSearchResult(Search))
-                    searchError && dispatch(setSearchError(''))
-                } else {
-                    dispatch(setSearchError(Error))
+        if(title) {
+            dispatch(setIsFetchingValue(true))
+            API.searchFilmsByTitle(title, typeValue)
+                .then(({data}) => {
+                    const {Response, Search, Error, totalResults} = data
+                    dispatch(setIsFetchingValue(false))
+                    if (Response === 'True') {
+                        dispatch(setSearchedMovieTitle(title))
+                        dispatch(setTotalFilmsCount(Number(totalResults)))
+                        dispatch(setSearchResult(Search))
+                        searchError && dispatch(setSearchError(''))
+                    } else {
+                        dispatch(setSearchError(Error))
+                        dispatch(setSearchedMovieTitle(title))
+                        searchResult.length > 0 && dispatch(setSearchResult([]))
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                    dispatch(setIsFetchingValue(false))
                     dispatch(setSearchedMovieTitle(title))
                     searchResult.length > 0 && dispatch(setSearchResult([]))
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                dispatch(setIsFetchingValue(false))
-                dispatch(setSearchedMovieTitle(title))
-                searchResult.length > 0 && dispatch(setSearchResult([]))
-            })
+                })
+        }
+
     }
 
 
