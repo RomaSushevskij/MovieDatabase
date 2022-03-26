@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {memo} from 'react'
 import style from './Header.module.css'
 import styleContainer from '../../commonStyles/Container.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFilm} from '@fortawesome/free-solid-svg-icons'
-import {Input} from "./Input/Input";
 import RadioButton from "./RadioButton/RadioButton";
 import {InputContainer} from "./Input/InputContainer";
 import {FilmsOptionsType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
@@ -15,13 +14,13 @@ type HeaderPropsType = {
     changeOptionValue: (optionTypeValue: FilmsOptionsType) => void
 }
 
-export const Header = ({
-                           filmsTypes,
-                           optionTypeValue,
-                           getFilmsList,
-                           changeOptionValue,
+export const Header = memo(({
+                                filmsTypes,
+                                optionTypeValue,
+                                getFilmsList,
+                                changeOptionValue,
 
-                       }: HeaderPropsType) => {
+                            }: HeaderPropsType) => {
     const onEnterKeyPressHandler = (inputValue: string) => {
         getFilmsList(inputValue, optionTypeValue)
     }
@@ -43,4 +42,4 @@ export const Header = ({
             <div className={style.border}></div>
         </>
     )
-}
+})

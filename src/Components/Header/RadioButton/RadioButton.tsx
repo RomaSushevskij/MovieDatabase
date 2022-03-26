@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, memo} from 'react'
 import style from './RadioButton.module.css'
 
 type DefaultRadioPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -8,7 +8,7 @@ type RadioButtonPropsType = DefaultRadioPropsType & {
     onChangeOption?: (option: any) => void
 }
 
-const RadioButton: React.FC<RadioButtonPropsType> = (
+const RadioButton: React.FC<RadioButtonPropsType> = memo((
     {
         type, name,
         options, value,
@@ -39,6 +39,6 @@ const RadioButton: React.FC<RadioButtonPropsType> = (
             {mappedOptions}
         </>
     )
-}
+})
 
 export default RadioButton

@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {memo} from 'react'
 import style from './SearchError.module.css'
 import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export type MovieNotFoundType = {
     searchError: string
-    inLiveSearch?:boolean
+    inLiveSearch?: boolean
 
 }
-export const SearchError = ({searchError,
-                                inLiveSearch}: MovieNotFoundType) => {
+export const SearchError = memo(({
+                                     searchError,
+                                     inLiveSearch
+                                 }: MovieNotFoundType) => {
     const classNameWrapper = inLiveSearch ?
         `${style.errorWrapper} ${style.errorWrapperInLiveSearch}` :
         style.errorWrapper
@@ -20,4 +22,4 @@ export const SearchError = ({searchError,
             {searchError}
         </div>
     )
-}
+})

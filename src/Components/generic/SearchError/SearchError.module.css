@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .errorWrapper.errorWrapperInLiveSearch {
     min-height: 70px;
 }

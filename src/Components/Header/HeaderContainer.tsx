@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import { PATH} from "../../App";
-import {AppActionsType, AppStateType, AppThunk} from "../../store/store";
+import {PATH} from "../../App";
+import {AppActionsType, AppStateType} from "../../store/store";
 import {Header} from "./Header";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    changeOptionTypeValue, FilmsOptionsType,
-    setIsFetchingValue, setSearchedMovieTitle, setSearchError,
-    setSearchResult, setTotalFilmsCount
+    changeOptionTypeValue,
+    FilmsOptionsType,
+    setIsFetchingValue,
+    setSearchedMovieTitle,
+    setSearchError,
+    setSearchResult,
+    setTotalFilmsCount
 } from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {Dispatch} from "redux";
 import API from "../../api/API";
@@ -40,7 +44,7 @@ export const HeaderContainer = () => {
     const innerGetFilmsList = (title: string, typeValue: FilmsOptionsType) => {
         dispatch(setIsFetchingValue(true))
         API.searchFilmsByTitle(title, typeValue)
-            .then(({data }) => {
+            .then(({data}) => {
                 const {Response, Search, Error, totalResults} = data
                 dispatch(setIsFetchingValue(false))
                 if (Response === 'True') {
@@ -59,13 +63,13 @@ export const HeaderContainer = () => {
                 dispatch(setIsFetchingValue(false))
                 dispatch(setSearchedMovieTitle(title))
                 searchResult.length > 0 && dispatch(setSearchResult([]))
-                dispatch(setSearchError(error.response.data.Error))
             })
     }
 
+
     const getFilmsList = (title: string, typeValue: FilmsOptionsType) => {
-        !onSearchPage && navigate((PATH.SEARCH_PAGE))
         innerGetFilmsList(title, typeValue)
+        !onSearchPage && navigate((PATH.SEARCH_PAGE))
     }
 
     const changeOptionValue = (optionTypeValue: FilmsOptionsType) => {

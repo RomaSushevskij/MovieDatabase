@@ -1,8 +1,8 @@
 .container {
     width: 80%;
     margin: 0 auto;
-    color:#3CEFFF;
-    margin-top:15px;
+    color: #3CEFFF;
+    margin-top: 15px;
     font-size: 18px;
     background: linear-gradient(90deg, rgb(60, 239, 255), rgb(252, 47, 112));
     -webkit-background-clip: text;

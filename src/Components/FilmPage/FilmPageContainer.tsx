@@ -1,16 +1,15 @@
 import React, {useEffect} from "react";
-import {useNavigate, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {FilmPage} from "./FilmPage";
 import {useDispatch, useSelector} from "react-redux";
 import {AppActionsType, AppStateType} from "../../store/store";
 import {Dispatch} from "redux";
-import API, {source} from "../../api/API";
+import API from "../../api/API";
 import {
-    defaultFilmsData,
-    FilmItemType, setFilmsData,
+    defaultFilmsData, searchFilmsInitialState,
+    setFilmsData,
     setIsFetchingValue,
-    setSearchError,
-    setSearchResult
+    setSearchError
 } from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {setEditMode} from "../../store/reducers/liveSearchReducer/liveSearchReducer";
 
@@ -52,8 +51,8 @@ export const FilmPageContainer = () => {
             getFilmsData(params['*']) :
             dispatch(setSearchError('Incorrect IMDb ID.'))
         dispatch(setEditMode(false))
-        return () => {
-            source.cancel('Request was cancel')
+        return ()=>{
+            dispatch(setFilmsData(searchFilmsInitialState.filmsData))
         }
     }, [params["*"]])
     return (

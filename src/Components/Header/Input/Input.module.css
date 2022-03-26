@@ -49,7 +49,28 @@
     position: absolute;
     width: 320px;
     background-color: #090821;
-    border: 1px solid #fc2f70;
-    box-shadow: 0 0 15px rgba(252, 47, 112, 0.5);
+    box-shadow: 0 0 15px rgba(252, 47, 112, 0.7);
     z-index: 1;
 }
+
+.enter {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+
+.enterActive {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms, transform 500ms;
+}
+
+.exit {
+    opacity: 1;
+}
+
+.exitActive {
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 500ms, transform 500ms;
+}
+

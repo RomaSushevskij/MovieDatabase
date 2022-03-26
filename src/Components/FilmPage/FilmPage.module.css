@@ -44,9 +44,11 @@
     box-shadow: 0 0 15px rgba(60, 239, 255, 0.5);
     width: 100%;
 }
+
 .filmDescription {
     margin-top: 100px;
 }
+
 .filmDescription > div {
     margin-top: 10px;
     margin-left: 50px;
@@ -71,6 +73,7 @@
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     margin: 0;
 }
+
 .posterAndBack {
     text-align: center;
 }

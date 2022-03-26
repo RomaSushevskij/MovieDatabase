@@ -1,25 +1,33 @@
 import {ActionTypeSearchFilms, searchFilmsReducer} from "./reducers/searchFilmsReducer/searchFilmsReducer";
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import {createStore, combineReducers, applyMiddleware, compose, Store} from "redux";
 import thunkMiddleware from 'redux-thunk';
 import {ThunkAction} from 'redux-thunk';
 import {ActionTypeLiveSearch, liveSearchReducer} from "./reducers/liveSearchReducer/liveSearchReducer";
 
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+
 const rootReducer = combineReducers({
-    filmsSearch:searchFilmsReducer,
-    liveSearch:liveSearchReducer
+    filmsSearch: searchFilmsReducer,
+    liveSearch: liveSearchReducer
 })
 export type AppActionsType =
     ActionTypeSearchFilms |
     ActionTypeLiveSearch
 export type AppStateType = ReturnType<typeof rootReducer>
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
-export type GetStateType = typeof store.getState
-export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store: Store<RootStoreType> = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+export type RootStoreType = ReturnType<typeof rootReducer>
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     AppStateType,
     unknown,
-    AppActionsType
-    >
+    AppActionsType>
 
 // @ts-ignore
 window.store = store

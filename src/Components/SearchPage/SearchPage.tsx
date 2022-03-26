@@ -7,6 +7,7 @@ import {Preloader} from "../generic/Preloader/Preloader";
 import {AboutSearchResult} from "../generic/AboutSearchResult/AboutSearchResult";
 import {Paginator} from "../generic/Paginator/Paginator";
 import {FilmType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
+import {HomePage} from "../HomePage/HomePage";
 
 export type SearchPageType = {
     searchResult: FilmType[]
@@ -29,7 +30,7 @@ export const SearchPage = ({
                            }: SearchPageType) => {
     const films = searchResult.length ? searchResult.map((film, i) => <FilmPreview
         key={film.imdbID + i} {...film}/>) : null
-    const contentPage = !films && searchError ? <SearchError searchError={searchError}/> : films
+    let contentPage = !films && searchError ? <SearchError searchError={searchError}/> : films ? films : <HomePage/>
     return (
         <div className={style.wrapper}>
             {films && <AboutSearchResult totalFilmsCount={totalFilmsCount}

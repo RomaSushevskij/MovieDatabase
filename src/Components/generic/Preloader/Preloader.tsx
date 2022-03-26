@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {memo} from 'react'
 import style from './Preloader.module.css'
 
 type PreloaderPropsType = {
-    inLiveSearch?:boolean
+    inLiveSearch?: boolean
 }
-export const Preloader = ({inLiveSearch}:PreloaderPropsType) => {
+export const Preloader = memo(({inLiveSearch}: PreloaderPropsType) => {
     const classNameWrapper = inLiveSearch ?
         `${style.preloaderWrapper} ${style.preloaderWrapperInLiveSearch}` :
         style.preloaderWrapper
@@ -16,4 +16,4 @@ export const Preloader = ({inLiveSearch}:PreloaderPropsType) => {
             </div>
         </div>
     )
-}
+})

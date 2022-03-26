@@ -42,7 +42,8 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
             {portionNumber > 1 && <span className={styleModule.threeDots}>{". . ."}</span>}
 
             {pages.filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
-                .map(page => <span key={page} className={props.currentPage === page ? `${styleModule.pageNumber} ${styleModule.selectedPageNumber}`: styleModule.pageNumber }
+                .map(page => <span key={page}
+                                   className={props.currentPage === page ? `${styleModule.pageNumber} ${styleModule.selectedPageNumber}` : styleModule.pageNumber}
                                    onClick={() => {
                                        props.onChangePage(page)
                                    }}>{page}</span>

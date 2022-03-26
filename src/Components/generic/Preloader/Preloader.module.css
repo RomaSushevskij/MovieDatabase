@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .preloaderWrapper.preloaderWrapperInLiveSearch {
     min-height: 70px;
 }

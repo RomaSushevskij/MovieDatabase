@@ -9,11 +9,12 @@
     text-align: center;
     transition: all 0.3s ease;
 }
+
 .previewWrapper:hover {
     transform: scale(1.05);
     transition: all 0.3s ease;
     cursor: pointer;
-    color:#FC2F70;
+    color: #FC2F70;
 }
 
 .posterAndDescription .poster {

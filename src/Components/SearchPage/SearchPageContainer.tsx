@@ -6,8 +6,9 @@ import {Dispatch} from "redux";
 import {
     setCurrentPage,
     setIsFetchingValue,
-    setSearchedMovieTitle, setSearchError, setSearchResult,
-    setTotalFilmsCount
+    setSearchedMovieTitle,
+    setSearchError,
+    setSearchResult
 } from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import API from "../../api/API";
 
@@ -26,7 +27,7 @@ export const SearchPageContainer = () => {
         dispatch(setCurrentPage(pageNumber))
         dispatch(setIsFetchingValue(true))
         API.searchFilmsByTitle(searchedMovieTitle, optionTypeValue, pageNumber)
-            .then(({data }) => {
+            .then(({data}) => {
                 const {Response, Search, Error, totalResults} = data
                 dispatch(setIsFetchingValue(false))
                 if (Response === 'True') {

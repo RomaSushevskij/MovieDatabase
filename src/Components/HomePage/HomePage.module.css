@@ -1,0 +1,34 @@
+.homePageWrapper {
+    color: white;
+}
+
+.container {
+    min-height: calc(100vh - 161px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+.homePageLogo {
+    min-width: 550px;
+    min-height: 550px;
+    background: linear-gradient(90deg, rgb(60, 239, 255), rgb(252, 47, 112));
+    mask: url("../../assets/homePageLogo.png");
+    mask-position: center;
+    mask-repeat: no-repeat;
+}
+
+.description {
+    color: #FC2F70;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    line-height: 2em;
+    padding-left: 20px;
+}
+
+
+
