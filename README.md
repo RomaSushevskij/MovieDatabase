@@ -2,9 +2,9 @@
 
 Simple movie collection app built with React and the  OMDBAPI.
 
-- :muscle: Allows the app to display movie lists, search for movies.
+- :memo: Allows the app to display movie lists, search for movies.
 
-- :zap: This project was generated with React 17.0.2 , 
+- :wrench: This project was generated with React 17.0.2 , 
                   built with <br />
                   - [React](https://reactjs.org/)  <br />
                   - [Redux](https://redux.js.org/)  <br />
@@ -13,5 +13,5 @@ Simple movie collection app built with React and the  OMDBAPI.
 - :sunny: API used [OMDb API](http://www.omdbapi.com/)
 
 ## Demo 
-:bowtie: [Link to Demo App](https://RomaSushevskij.github.io/MovieDatabase) 
+:link: [Link to Demo App](https://RomaSushevskij.github.io/MovieDatabase) 
 
