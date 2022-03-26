@@ -1,4 +1,5 @@
 # Movie-App
+![Header](https://github.com/RomaSushevskij/MovieDatabase/blob/main/src/assets/Preview.png?raw=true)
 
 Simple movie collection app built with React and the  OMDBAPI.
 
