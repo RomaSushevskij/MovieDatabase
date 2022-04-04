@@ -1,6 +1,5 @@
-import {AppActionsType, AppThunk} from "../../store";
+import {AppStateType, AppThunk} from "../../store";
 import API from "../../../api/API";
-import {Dispatch} from "redux";
 
 enum ACTIONS_TYPES {
     CHANGE_OPTION_TYPE_VALUE = 'SearchFilms/CHANGE_OPTION_TYPE_VALUE',
@@ -54,14 +53,14 @@ export const defaultFilmsData = {
     "imdbID": "imdbID",
 } as FilmItemType
 export const searchFilmsInitialState = {
-    searchedMovieTitle:'',
+    searchedMovieTitle: '',
     searchResult: [] as FilmType[],
     searchError: '',
     filmsTypes: ['All', 'Movie', 'Series', 'Episode'] as FilmsOptionsType[],
     optionTypeValue: 'All' as FilmsOptionsType,
     filmsData: defaultFilmsData,
     isFetching: false,
-    totalFilmsCount:0,
+    totalFilmsCount: 0,
     currentPage: 1,
 }
 export type SearchFilmsInitialStateType = typeof searchFilmsInitialState
@@ -118,5 +117,34 @@ export const setIsFetchingValue = (isFetching: boolean) => ({
 export const setCurrentPage = (currentPage: number) => ({
     type: ACTIONS_TYPES.SET_CURRENT_PAGE, payload: {currentPage}
 } as const)
+
+// T H U N K S
+export const getFilms = (title: string, typeValue: FilmsOptionsType): AppThunk => (dispatch,  getState) => {
+    const {searchError, searchResult} = getState().filmsSearch
+    if (title) {
+        dispatch(setIsFetchingValue(true))
+        API.searchFilmsByTitle(title, typeValue)
+            .then(({data}) => {
+                const {Response, Search, Error, totalResults} = data
+                dispatch(setIsFetchingValue(false))
+                if (Response === 'True') {
+                    dispatch(setSearchedMovieTitle(title))
+                    dispatch(setTotalFilmsCount(Number(totalResults)))
+                    dispatch(setSearchResult(Search))
+                    searchError && dispatch(setSearchError(''))
+                } else {
+                    dispatch(setSearchError(Error))
+                    dispatch(setSearchedMovieTitle(title))
+                    searchResult.length > 0 && dispatch(setSearchResult([]))
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(setIsFetchingValue(false))
+                dispatch(setSearchedMovieTitle(title))
+                searchResult.length > 0 && dispatch(setSearchResult([]))
+            })
+    }
+}
 
 

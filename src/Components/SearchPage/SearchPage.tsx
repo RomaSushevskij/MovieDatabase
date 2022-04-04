@@ -8,28 +8,33 @@ import {AboutSearchResult} from "../generic/AboutSearchResult/AboutSearchResult"
 import {Paginator} from "../generic/Paginator/Paginator";
 import {FilmType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {HomePage} from "../HomePage/HomePage";
+import {useDispatch, useSelector} from "react-redux";
+import {Dispatch} from "redux";
+import {AppActionsType, AppStateType} from "../../store/store";
 
 export type SearchPageType = {
-    searchResult: FilmType[]
-    searchError: string
-    isFetching: boolean
-    totalFilmsCount: number
-    currentPage: number
-    searchedMovieTitle: string
     onChangePage: (pageNumber: number) => void
 }
 export const SearchPage = ({
-                               searchResult,
-                               searchError,
-                               isFetching,
-                               totalFilmsCount,
-                               searchedMovieTitle,
-                               currentPage,
+
                                onChangePage,
 
                            }: SearchPageType) => {
-    const films = searchResult.length ? searchResult.map((film, i) => <FilmPreview
-        key={film.imdbID + i} {...film}/>) : null
+
+    const dispatch = useDispatch<Dispatch<AppActionsType>>()
+    const {
+        searchResult,
+        searchError,
+        isFetching,
+        totalFilmsCount,
+        searchedMovieTitle,
+        currentPage,
+        optionTypeValue,
+    } = useSelector((state: AppStateType) => state.filmsSearch)
+
+    const films = searchResult.length ? searchResult.map((film, i) => {
+        return <FilmPreview key={film.imdbID + i} {...film}/>
+    }) : null
     let contentPage = !films && searchError ? <SearchError searchError={searchError}/> : films ? films : <HomePage/>
     return (
         <div className={style.wrapper}>

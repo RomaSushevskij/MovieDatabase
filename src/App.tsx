@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
-import {HeaderContainer} from "./Components/Header/HeaderContainer";
 import {SearchPageContainer} from "./Components/SearchPage/SearchPageContainer";
 import {FilmPageContainer} from "./Components/FilmPage/FilmPageContainer";
-import {HomePage} from "./Components/HomePage/HomePage";
+import {Header} from "./Components/Header/Header";
 
 export type PATHType = {
     SEARCH_PAGE: string
@@ -20,7 +19,7 @@ export const PATH: PATHType = {
 function App() {
     return (
         <div className="app_wrapper">
-            <HeaderContainer/>
+            <Header/>
             <div className="app_wrapper_content">
                 <Routes>
                     <Route path='/' element={<Navigate to={PATH.SEARCH_PAGE}/>}/>

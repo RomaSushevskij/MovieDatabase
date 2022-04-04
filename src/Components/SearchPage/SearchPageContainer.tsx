@@ -17,10 +17,7 @@ export const SearchPageContainer = () => {
     const {
         searchResult,
         searchError,
-        isFetching,
-        totalFilmsCount,
         searchedMovieTitle,
-        currentPage,
         optionTypeValue,
     } = useSelector((state: AppStateType) => state.filmsSearch)
     const onChangePage = (pageNumber: number) => {
@@ -46,11 +43,5 @@ export const SearchPageContainer = () => {
                 dispatch(setSearchError(error.response.data.Error))
             })
     }
-    return <SearchPage searchResult={searchResult}
-                       searchError={searchError}
-                       isFetching={isFetching}
-                       totalFilmsCount={totalFilmsCount}
-                       searchedMovieTitle={searchedMovieTitle}
-                       currentPage={currentPage}
-                       onChangePage={onChangePage}/>
+    return <SearchPage onChangePage={onChangePage}/>
 }
