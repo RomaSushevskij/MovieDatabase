@@ -66,7 +66,7 @@ export const FilmPage = () => {
                 <>
                     {searchError ? <SearchError searchError={searchError}/> :
                         <>
-                            <div style={{backgroundImage: `url(${Poster})`}} className={style.previewLogo}>
+                            <div style={{/*{backgroundImage: `url(${Poster})`}*/}} className={style.previewLogo}>
                             </div>
                             <div className={style.container}>
                                 <div className={style.posterAndBack}>
