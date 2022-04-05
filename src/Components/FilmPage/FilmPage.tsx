@@ -60,13 +60,15 @@ export const FilmPage = () => {
     } = filmsData
 
     const navigate = useNavigate()
+    debugger
+    const poster = `url(${Poster})`
     return (
         <div className={style.filmPageWrapper}>
             {isFetching ? <Preloader/> :
                 <>
                     {searchError ? <SearchError searchError={searchError}/> :
                         <>
-                            <div style={{/*{backgroundImage: `url(${Poster})`}*/}} className={style.previewLogo}>
+                            <div style={{backgroundImage: poster}} className={style.previewLogo}>
                             </div>
                             <div className={style.container}>
                                 <div className={style.posterAndBack}>
