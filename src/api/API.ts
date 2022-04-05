@@ -1,11 +1,13 @@
 import axios from 'axios';
+
 const proxy = {
-    anywhere:'https://cors-anywhere.herokuapp.com/https://www.omdbapi.com',
-    thingproxy:'https://thingproxy.freeboard.io/fetch/https://www.omdbapi.com',
+    without: 'https://www.omdbapi.com',
+    anywhere: 'https://cors-anywhere.herokuapp.com/https://www.omdbapi.com',
+    thingproxy: 'https://thingproxy.freeboard.io/fetch/https://www.omdbapi.com',
 
 }
 const configOMB = {
-    baseURL: proxy.thingproxy,
+    baseURL: proxy.anywhere,
 };
 const key = 'fa23d3a3';
 export let source: ReturnType<typeof axios.CancelToken.source>;
