@@ -1,4 +1,4 @@
-import {FilmType} from "../searchFilmsReducer/searchFilmsReducer";
+import {FilmType, setSearchError} from "../searchFilmsReducer/searchFilmsReducer";
 import API, {source} from "../../../api/API";
 import {AppThunk} from "../../store";
 
@@ -55,7 +55,7 @@ export const setEditMode = (editMode: boolean) => ({
 
 //T H U N K S
 
-export const getFilmsInLiveSearch = (title: string): AppThunk => (dispatch, getState) => {
+export const getFilmsInLiveSearch = (title: string): AppThunk => async (dispatch, getState) => {
     const {optionTypeValue} = getState().filmsSearch
     const {liveSearchError} = getState().liveSearch
     if (source) {
@@ -63,26 +63,27 @@ export const getFilmsInLiveSearch = (title: string): AppThunk => (dispatch, getS
     }
     dispatch(setEditMode(true))
     dispatch(setLiveIsFetchingValue(true));
-    API.searchFilmsByTitle(title, optionTypeValue)
-        .then(({data}) => {
-            const {Response, Search, Error, totalResults} = data
-            dispatch(setLiveIsFetchingValue(false))
-            if (Response === 'True') {
-                dispatch(setLiveSearchResult(Search))
-                liveSearchError && dispatch(setLiveSearchError(''))
-            } else {
-                dispatch(setLiveSearchError(Error))
-                liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
-            }
-        })
-        .catch(error => {
-            console.log(error)
-            dispatch(setLiveIsFetchingValue(false))
+    try {
+        const {data} = await API.searchFilmsByTitle(title, optionTypeValue)
+        const {Response, Search, Error, totalResults} = data
+        dispatch(setLiveIsFetchingValue(false))
+        if (Response === 'True') {
+            dispatch(setLiveSearchResult(Search))
+            liveSearchError && dispatch(setLiveSearchError(''))
+        } else {
+            dispatch(setLiveSearchError(Error))
             liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
-            error.response && dispatch(setLiveSearchError(error.response.data.Error))
-            error.message && console.log(error.message)
-
-        })
+        }
+    } catch (error: any) {
+        console.log(error)
+        dispatch(setLiveIsFetchingValue(false))
+        liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
+        if (error.message) {
+            dispatch(setSearchError(error.message))
+        } else if (error.response.data) {
+            dispatch(setSearchError(error.response.data.Error))
+        }
+    }
 }
 
 

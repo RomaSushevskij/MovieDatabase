@@ -150,8 +150,11 @@ export const getFilmsInner = (title: string,
         dispatch(setIsFetchingValue(false))
         searchedMovieTitle && dispatch(setSearchedMovieTitle(''))
         searchResult.length > 0 && dispatch(setSearchResult([]))
-        dispatch(setSearchError(error.response.data.Error))
-        error.message && dispatch(setSearchError(error.message))
+        if (error.message) {
+            dispatch(setSearchError(error.message))
+        } else if (error.response.data){
+            dispatch(setSearchError(error.response.data.Error))
+        }
     }
 }
 
@@ -189,8 +192,11 @@ export const getFilmData = (imdbID: string): AppThunk => async (dispatch, getSta
         console.log(error)
         dispatch(setIsFetchingValue(false))
         filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
-        error.response && dispatch(setSearchError(error.response.data.Error))
-        error.message && dispatch(setSearchError(error.message))
+        if (error.message) {
+            dispatch(setSearchError(error.message))
+        } else if (error.response.data){
+            dispatch(setSearchError(error.response.data.Error))
+        }
     }
 }
 
