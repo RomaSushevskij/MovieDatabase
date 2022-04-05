@@ -60,7 +60,6 @@ export const FilmPage = () => {
     } = filmsData
 
     const navigate = useNavigate()
-    debugger
     const poster = `url(${Poster})`
     return (
         <div className={style.filmPageWrapper}>
