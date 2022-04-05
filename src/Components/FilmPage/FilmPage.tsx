@@ -14,8 +14,8 @@ import {PATH} from "../../App";
 import {useNavigate, useParams} from 'react-router-dom'
 import {DefaultPoster} from "../generic/DefaultPoster/DefaultPoster";
 import {
-    FilmItemType,
-    getFilmData, searchFilmsInitialState,
+    getFilmData,
+    searchFilmsInitialState,
     setFilmsData,
     setSearchError
 } from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";

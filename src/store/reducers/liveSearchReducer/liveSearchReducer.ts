@@ -1,5 +1,4 @@
 import {FilmType} from "../searchFilmsReducer/searchFilmsReducer";
-import {ChangeEvent} from "react";
 import API, {source} from "../../../api/API";
 import {AppThunk} from "../../store";
 
@@ -14,7 +13,7 @@ export const liveSearchInitialState = {
     liveSearchResult: [] as FilmType[],
     liveIsFetchingValue: false,
     liveSearchError: '',
-    editMode:true,
+    editMode: true,
 
 
 }
@@ -40,7 +39,6 @@ export type ActionTypeLiveSearch =
     ReturnType<typeof setEditMode>
 
 
-
 // A C T I O N  C R E A T O R S
 export const setLiveSearchResult = (liveSearchResult: FilmType[]) => ({
     type: ACTIONS_TYPES.SET_LIVE_SEARCH_RESULT, payload: {liveSearchResult}
@@ -57,7 +55,7 @@ export const setEditMode = (editMode: boolean) => ({
 
 //T H U N K S
 
-export const getFilmsInLiveSearch = (title:string):AppThunk => (dispatch, getState) => {
+export const getFilmsInLiveSearch = (title: string): AppThunk => (dispatch, getState) => {
     const {optionTypeValue} = getState().filmsSearch
     const {liveSearchError} = getState().liveSearch
     if (source) {

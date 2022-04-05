@@ -20,10 +20,7 @@ const RadioButton: React.FC<RadioButtonPropsType> = memo((
         onChange && onChange(e)
         onChangeOption && onChangeOption(e.currentTarget.value)
     }
-
-
     const mappedOptions: any[] = options ? options.map((o, i) => (
-
         <label className={style.lRadio} key={name + '-' + i}>
             <input type="radio"
                    name={name}

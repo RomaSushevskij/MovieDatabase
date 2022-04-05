@@ -1,4 +1,4 @@
-import {AppStateType, AppThunk} from "../../store";
+import {AppThunk} from "../../store";
 import API from "../../../api/API";
 
 enum ACTIONS_TYPES {
@@ -122,7 +122,7 @@ export const setCurrentPage = (currentPage: number) => ({
 // T H U N K S
 export const getFilmsInner = (title: string,
                               typeValue: FilmsOptionsType,
-                              pageNumber: number): AppThunk => (dispatch, getState) => {
+                              pageNumber: number): AppThunk => async (dispatch, getState) => {
     const {
         searchedMovieTitle,
         optionTypeValue,
@@ -131,67 +131,67 @@ export const getFilmsInner = (title: string,
     } = getState().filmsSearch
     dispatch(setCurrentPage(pageNumber))
     dispatch(setIsFetchingValue(true))
-    API.searchFilmsByTitle(title, typeValue, pageNumber)
-        .then(({data}) => {
-            const {Response, Search, Error, totalResults} = data
-            dispatch(setIsFetchingValue(false))
-            if (Response === 'True') {
-                dispatch(setSearchedMovieTitle(title))
-                dispatch(setTotalFilmsCount(Number(totalResults)))
-                dispatch(setSearchResult(Search))
-                searchError && dispatch(setSearchError(''))
-            } else {
-                dispatch(setSearchError(Error))
-                dispatch(setSearchedMovieTitle(title))
-                searchResult.length > 0 && dispatch(setSearchResult([]))
-            }
-        })
-        .catch(error => {
-            console.log(error)
-            dispatch(setIsFetchingValue(false))
-            searchedMovieTitle && dispatch(setSearchedMovieTitle(''))
+    try {
+        const {data} = await API.searchFilmsByTitle(title, typeValue, pageNumber)
+        const {Response, Search, Error, totalResults} = data
+        dispatch(setIsFetchingValue(false))
+        if (Response === 'True') {
+            dispatch(setSearchedMovieTitle(title))
+            dispatch(setTotalFilmsCount(Number(totalResults)))
+            dispatch(setSearchResult(Search))
+            searchError && dispatch(setSearchError(''))
+        } else {
+            dispatch(setSearchError(Error))
+            dispatch(setSearchedMovieTitle(title))
             searchResult.length > 0 && dispatch(setSearchResult([]))
-            dispatch(setSearchError(error.response.data.Error))
-        })
+        }
+    } catch (error: any) {
+        console.log(error)
+        dispatch(setIsFetchingValue(false))
+        searchedMovieTitle && dispatch(setSearchedMovieTitle(''))
+        searchResult.length > 0 && dispatch(setSearchResult([]))
+        dispatch(setSearchError(error.response.data.Error))
+        error.message && dispatch(setSearchError(error.message))
+    }
 }
 
-export const getFilms = (title: string, typeValue: FilmsOptionsType): AppThunk => (dispatch, getState) => {
+export const getFilms = (title: string, typeValue: FilmsOptionsType): AppThunk => dispatch => {
     if (title) {
         dispatch(getFilmsInner(title, typeValue, 1))
     }
 }
-export const onChangePageGetFilms = (title: string, typeValue: FilmsOptionsType, pageNumber: number): AppThunk => (dispatch, getState) => {
+export const onChangePageGetFilms = (title: string, typeValue: FilmsOptionsType, pageNumber: number): AppThunk => dispatch => {
     dispatch(getFilmsInner(title, typeValue, pageNumber))
 }
 
-export const getFilmData = (imdbID: string): AppThunk => (dispatch, getState) => {
+export const getFilmData = (imdbID: string): AppThunk => async (dispatch, getState) => {
     const {
         optionTypeValue,
         searchError,
         filmsData,
     } = getState().filmsSearch
     dispatch(setIsFetchingValue(true))
-    API.getFilmsData(imdbID, optionTypeValue)
-        .then(({data}) => {
-            const {
-                Response,
-                Error,
-            } = data
-            dispatch(setIsFetchingValue(false))
-            if (Response === 'True') {
-                dispatch(setFilmsData(data))
-                searchError && dispatch(setSearchError(''))
-            } else {
-                dispatch(setSearchError(Error))
-                filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
-            }
-        })
-        .catch(error => {
-            console.log(error)
-            dispatch(setIsFetchingValue(false))
+    try {
+        const {data} = await API.getFilmsData(imdbID, optionTypeValue)
+        const {
+            Response,
+            Error,
+        } = data
+        dispatch(setIsFetchingValue(false))
+        if (Response === 'True') {
+            dispatch(setFilmsData(data))
+            searchError && dispatch(setSearchError(''))
+        } else {
+            dispatch(setSearchError(Error))
             filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
-            error.response && dispatch(setSearchError(error.response.data.Error))
-        })
+        }
+    } catch (error: any) {
+        console.log(error)
+        dispatch(setIsFetchingValue(false))
+        filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
+        error.response && dispatch(setSearchError(error.response.data.Error))
+        error.message && dispatch(setSearchError(error.message))
+    }
 }
 
 

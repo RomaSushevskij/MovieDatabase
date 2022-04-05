@@ -7,9 +7,14 @@ Simple movie collection app built with React and the  OMDBAPI.
 
 - :wrench: This project was generated with React 17.0.2 , 
                   built with <br />
+                  - [TypeScript](https://www.typescriptlang.org/) <br />
                   - [React](https://reactjs.org/)  <br />
                   - [Redux](https://redux.js.org/)  <br />
-                  - [TypeScript](https://www.typescriptlang.org/) <br />
+                  - [React Rrouter](https://reactrouter.com/docs/en/v6/getting-started/overview) <br />
+                  - [Redux Thunk](https://github.com/reduxjs/redux-thunk) <br />
+                  - [Axios](https://axios-http.com/docs/intro) <br />
+                  - [React Transition Group](https://reactcommunity.org/react-transition-group/) <br />
+                  - [Fontawesome](https://fontawesome.com/v5/docs/web/use-with/react) <br />
 - :octocat: Deployed app to gitHub Pages 
 - :sunny: API used [OMDb API](http://www.omdbapi.com/)
 

@@ -11,9 +11,7 @@ export const Preloader = memo(({inLiveSearch}: PreloaderPropsType) => {
 
     return (
         <div className={classNameWrapper}>
-            <div className={style.preloaderBody}>
-
-            </div>
+            <div className={style.preloaderBody}></div>
         </div>
     )
 })

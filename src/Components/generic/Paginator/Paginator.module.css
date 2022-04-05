@@ -1,6 +1,7 @@
 .paginator {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .pagesToBack,
@@ -15,6 +16,7 @@
     letter-spacing: .1em;
     transition: all 0.3s ease;
     box-shadow: 0 0 15px rgba(60, 239, 255, 0.2);
+    padding: 5px;
 }
 
 .pagesToBack:hover,

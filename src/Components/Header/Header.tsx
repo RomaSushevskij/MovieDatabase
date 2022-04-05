@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Dispatch, KeyboardEvent, memo, useEffect, useState} from 'react'
+import React, {ChangeEvent, KeyboardEvent, memo, useEffect, useState} from 'react'
 import style from './Header.module.css'
 import styleContainer from '../../commonStyles/Container.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -10,7 +10,7 @@ import {
     getFilms
 } from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType, AppThunk} from "../../store/store";
+import {AppStateType} from "../../store/store";
 import {useLocation, useNavigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {getFilmsInLiveSearch, setEditMode} from "../../store/reducers/liveSearchReducer/liveSearchReducer";
@@ -45,7 +45,7 @@ export const Header = memo(() => {
         onSearchPage && dispatch(getFilms(searchedMovieTitle, optionTypeValue))
     }
 
-    //FOR INPUT
+    //FUNCTIONALITY FOR INPUT
     const {liveSearchError, liveSearchResult, liveIsFetchingValue, editMode} = useSelector((state: AppStateType) => state.liveSearch)
     const [inputValue, setInputValue] = useState('');
     useEffect(() => {

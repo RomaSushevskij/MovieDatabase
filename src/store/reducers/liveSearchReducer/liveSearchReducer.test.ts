@@ -1,15 +1,12 @@
 import {
+    liveSearchInitialState,
     LiveSearchInitialStateType,
     liveSearchReducer,
-    liveSearchInitialState, setLiveIsFetchingValue, setLiveSearchError,
+    setLiveIsFetchingValue,
+    setLiveSearchError,
     setLiveSearchResult
 } from "./liveSearchReducer";
-import {
-    FilmType,
-    searchFilmsReducer,
-    setIsFetchingValue, setSearchError,
-    setSearchResult
-} from "../searchFilmsReducer/searchFilmsReducer";
+import {FilmType} from "../searchFilmsReducer/searchFilmsReducer";
 
 let startState: LiveSearchInitialStateType =
     beforeEach(() => {
