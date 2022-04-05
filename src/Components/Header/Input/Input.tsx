@@ -10,7 +10,7 @@ import {CSSTransition} from "react-transition-group";
 type InputPropsType = {
     value?: string
     onChange?: (value: ChangeEvent<HTMLInputElement>) => void
-    onEnter?: (value: string) => void
+    onEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
     placeHolder?: string
     onKeyPress?: (e: KeyboardEvent<HTMLInputElement>) => void
     liveSearchResult?: FilmType[]

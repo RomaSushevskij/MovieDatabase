@@ -118,33 +118,80 @@ export const setCurrentPage = (currentPage: number) => ({
     type: ACTIONS_TYPES.SET_CURRENT_PAGE, payload: {currentPage}
 } as const)
 
+
 // T H U N K S
-export const getFilms = (title: string, typeValue: FilmsOptionsType): AppThunk => (dispatch,  getState) => {
-    const {searchError, searchResult} = getState().filmsSearch
-    if (title) {
-        dispatch(setIsFetchingValue(true))
-        API.searchFilmsByTitle(title, typeValue)
-            .then(({data}) => {
-                const {Response, Search, Error, totalResults} = data
-                dispatch(setIsFetchingValue(false))
-                if (Response === 'True') {
-                    dispatch(setSearchedMovieTitle(title))
-                    dispatch(setTotalFilmsCount(Number(totalResults)))
-                    dispatch(setSearchResult(Search))
-                    searchError && dispatch(setSearchError(''))
-                } else {
-                    dispatch(setSearchError(Error))
-                    dispatch(setSearchedMovieTitle(title))
-                    searchResult.length > 0 && dispatch(setSearchResult([]))
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                dispatch(setIsFetchingValue(false))
+export const getFilmsInner = (title: string,
+                              typeValue: FilmsOptionsType,
+                              pageNumber: number): AppThunk => (dispatch, getState) => {
+    const {
+        searchedMovieTitle,
+        optionTypeValue,
+        searchError,
+        searchResult,
+    } = getState().filmsSearch
+    dispatch(setCurrentPage(pageNumber))
+    dispatch(setIsFetchingValue(true))
+    API.searchFilmsByTitle(title, typeValue, pageNumber)
+        .then(({data}) => {
+            const {Response, Search, Error, totalResults} = data
+            dispatch(setIsFetchingValue(false))
+            if (Response === 'True') {
+                dispatch(setSearchedMovieTitle(title))
+                dispatch(setTotalFilmsCount(Number(totalResults)))
+                dispatch(setSearchResult(Search))
+                searchError && dispatch(setSearchError(''))
+            } else {
+                dispatch(setSearchError(Error))
                 dispatch(setSearchedMovieTitle(title))
                 searchResult.length > 0 && dispatch(setSearchResult([]))
-            })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsFetchingValue(false))
+            searchedMovieTitle && dispatch(setSearchedMovieTitle(''))
+            searchResult.length > 0 && dispatch(setSearchResult([]))
+            dispatch(setSearchError(error.response.data.Error))
+        })
+}
+
+export const getFilms = (title: string, typeValue: FilmsOptionsType): AppThunk => (dispatch, getState) => {
+    if (title) {
+        dispatch(getFilmsInner(title, typeValue, 1))
     }
+}
+export const onChangePageGetFilms = (title: string, typeValue: FilmsOptionsType, pageNumber: number): AppThunk => (dispatch, getState) => {
+    dispatch(getFilmsInner(title, typeValue, pageNumber))
+}
+
+export const getFilmData = (imdbID: string): AppThunk => (dispatch, getState) => {
+    const {
+        optionTypeValue,
+        searchError,
+        filmsData,
+    } = getState().filmsSearch
+    dispatch(setIsFetchingValue(true))
+    API.getFilmsData(imdbID, optionTypeValue)
+        .then(({data}) => {
+            const {
+                Response,
+                Error,
+            } = data
+            dispatch(setIsFetchingValue(false))
+            if (Response === 'True') {
+                dispatch(setFilmsData(data))
+                searchError && dispatch(setSearchError(''))
+            } else {
+                dispatch(setSearchError(Error))
+                filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsFetchingValue(false))
+            filmsData.Year !== "Year" && dispatch(setFilmsData(defaultFilmsData))
+            error.response && dispatch(setSearchError(error.response.data.Error))
+        })
 }
 
 

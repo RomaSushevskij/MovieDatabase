@@ -6,22 +6,14 @@ import {SearchError} from "../generic/SearchError/SearchError";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {AboutSearchResult} from "../generic/AboutSearchResult/AboutSearchResult";
 import {Paginator} from "../generic/Paginator/Paginator";
-import {FilmType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
+import {onChangePageGetFilms} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {HomePage} from "../HomePage/HomePage";
 import {useDispatch, useSelector} from "react-redux";
-import {Dispatch} from "redux";
-import {AppActionsType, AppStateType} from "../../store/store";
+import {AppStateType} from "../../store/store";
 
-export type SearchPageType = {
-    onChangePage: (pageNumber: number) => void
-}
-export const SearchPage = ({
+export const SearchPage = () => {
 
-                               onChangePage,
-
-                           }: SearchPageType) => {
-
-    const dispatch = useDispatch<Dispatch<AppActionsType>>()
+    const dispatch = useDispatch()
     const {
         searchResult,
         searchError,
@@ -32,10 +24,19 @@ export const SearchPage = ({
         optionTypeValue,
     } = useSelector((state: AppStateType) => state.filmsSearch)
 
+    //Getting of new filmsList after changing pagination number
+    const onChangePage = (pageNumber: number) => {
+        dispatch(onChangePageGetFilms(searchedMovieTitle, optionTypeValue, pageNumber))
+    }
+
+    //Representation of filmsList
     const films = searchResult.length ? searchResult.map((film, i) => {
         return <FilmPreview key={film.imdbID + i} {...film}/>
     }) : null
+
+    //Representation of contentPage
     let contentPage = !films && searchError ? <SearchError searchError={searchError}/> : films ? films : <HomePage/>
+
     return (
         <div className={style.wrapper}>
             {films && <AboutSearchResult totalFilmsCount={totalFilmsCount}

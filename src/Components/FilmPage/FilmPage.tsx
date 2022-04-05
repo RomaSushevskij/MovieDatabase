@@ -9,27 +9,41 @@ import {
     faStar
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, {useEffect} from "react";
 import {PATH} from "../../App";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {DefaultPoster} from "../generic/DefaultPoster/DefaultPoster";
-import {FilmItemType} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
+import {
+    FilmItemType,
+    getFilmData, searchFilmsInitialState,
+    setFilmsData,
+    setSearchError
+} from "../../store/reducers/searchFilmsReducer/searchFilmsReducer";
 import {SearchError} from "../generic/SearchError/SearchError";
 import {Preloader} from "../generic/Preloader/Preloader";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../store/store";
+import {setEditMode} from "../../store/reducers/liveSearchReducer/liveSearchReducer";
 
+export const FilmPage = () => {
+    const {
+        filmsData,
+        optionTypeValue,
+        searchError,
+        isFetching,
+    } = useSelector((state: AppStateType) => state.filmsSearch)
+    const dispatch = useDispatch()
+    const params = useParams<'*'>()
+    useEffect(() => {
+        params["*"] ?
+            dispatch(getFilmData(params['*'])) :
+            dispatch(setSearchError('Incorrect IMDb ID.'))
+        dispatch(setEditMode(false))
+        return () => {
+            dispatch(setFilmsData(searchFilmsInitialState.filmsData))
+        }
+    }, [params["*"]])
 
-type FilmPageType = {
-    filmsData: FilmItemType
-    searchError: string
-    isFetching: boolean
-}
-
-
-export const FilmPage = ({
-                             filmsData,
-                             searchError,
-                             isFetching,
-                         }: FilmPageType) => {
     let {
         Title,
         Year,

@@ -1,4 +1,7 @@
 import {FilmType} from "../searchFilmsReducer/searchFilmsReducer";
+import {ChangeEvent} from "react";
+import API, {source} from "../../../api/API";
+import {AppThunk} from "../../store";
 
 enum ACTIONS_TYPES {
     SET_LIVE_SEARCH_RESULT = 'LiveSearch/SET_LIVE_SEARCH_RESULT',
@@ -51,5 +54,37 @@ export const setLiveSearchError = (liveSearchError: string) => ({
 export const setEditMode = (editMode: boolean) => ({
     type: ACTIONS_TYPES.SET_EDIT_MODE, payload: {editMode}
 } as const)
+
+//T H U N K S
+
+export const getFilmsInLiveSearch = (title:string):AppThunk => (dispatch, getState) => {
+    const {optionTypeValue} = getState().filmsSearch
+    const {liveSearchError} = getState().liveSearch
+    if (source) {
+        source.cancel('Request was cancel')
+    }
+    dispatch(setEditMode(true))
+    dispatch(setLiveIsFetchingValue(true));
+    API.searchFilmsByTitle(title, optionTypeValue)
+        .then(({data}) => {
+            const {Response, Search, Error, totalResults} = data
+            dispatch(setLiveIsFetchingValue(false))
+            if (Response === 'True') {
+                dispatch(setLiveSearchResult(Search))
+                liveSearchError && dispatch(setLiveSearchError(''))
+            } else {
+                dispatch(setLiveSearchError(Error))
+                liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setLiveIsFetchingValue(false))
+            liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
+            error.response && dispatch(setLiveSearchError(error.response.data.Error))
+            error.message && console.log(error.message)
+
+        })
+}
 
 

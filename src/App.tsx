@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
 import {SearchPageContainer} from "./Components/SearchPage/SearchPageContainer";
-import {FilmPageContainer} from "./Components/FilmPage/FilmPageContainer";
 import {Header} from "./Components/Header/Header";
+import {FilmPage} from "./Components/FilmPage/FilmPage";
 
 export type PATHType = {
     SEARCH_PAGE: string
@@ -25,7 +25,7 @@ function App() {
                     <Route path='/' element={<Navigate to={PATH.SEARCH_PAGE}/>}/>
                     <Route path={PATH.SEARCH_PAGE}
                            element={<SearchPageContainer/>}/>
-                    <Route path={PATH.FILM_PAGE} element={<FilmPageContainer/>}/>
+                    <Route path={PATH.FILM_PAGE} element={<FilmPage/>}/>
                 </Routes>
             </div>
         </div>
