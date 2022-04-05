@@ -54,12 +54,12 @@ export const setEditMode = (editMode: boolean) => ({
 } as const)
 
 //T H U N K S
-
 export const getFilmsInLiveSearch = (title: string): AppThunk => async (dispatch, getState) => {
     const {optionTypeValue} = getState().filmsSearch
     const {liveSearchError} = getState().liveSearch
+    const errorMessge = 'Request was cancel'
     if (source) {
-        source.cancel('Request was cancel')
+        source.cancel(errorMessge)
     }
     dispatch(setEditMode(true))
     dispatch(setLiveIsFetchingValue(true));
@@ -78,9 +78,9 @@ export const getFilmsInLiveSearch = (title: string): AppThunk => async (dispatch
         console.log(error)
         dispatch(setLiveIsFetchingValue(false))
         liveSearchError.length > 0 && dispatch(setLiveSearchResult([]))
-        if (error.message) {
+        if (error.message && error.message !== errorMessge) {
             dispatch(setSearchError(error.message))
-        } else if (error.response.data) {
+        } else if (error.response) {
             dispatch(setSearchError(error.response.data.Error))
         }
     }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const configOMB = {
-    baseURL: 'https://www.omdbapi.com',
+    baseURL: 'https://cors-anywhere.herokuapp.com/https://www.omdbapi.com',
 };
 const key = 'fa23d3a3';
 export let source: ReturnType<typeof axios.CancelToken.source>;
