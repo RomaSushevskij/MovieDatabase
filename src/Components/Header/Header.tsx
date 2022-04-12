@@ -15,6 +15,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {PATH} from "../../App";
 import {getFilmsInLiveSearch, setEditMode} from "../../store/reducers/liveSearchReducer/liveSearchReducer";
 import {Input} from "./Input/Input";
+import {useDebounce} from '../../hooks/useDebounce';
 
 export const Header = memo(() => {
     //Are we on a search page?
@@ -63,12 +64,18 @@ export const Header = memo(() => {
             dispatch(setEditMode(false))
         }
     };
+    //debounced live search
+    const innerDebounceCallback = (title: string) => {
+        dispatch(getFilmsInLiveSearch(title))
+    }
+    const debouncedSearch = useDebounce(innerDebounceCallback, 1000)
     //Getting of films by every key press
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         const title = e.currentTarget.value
         setInputValue(title)
-        dispatch(getFilmsInLiveSearch(title))
+        debouncedSearch(title)
     }
+
     //Action on clicking on a item film in the list on live search films
     const onFilmItemLiveSearchClick = (e: React.MouseEvent<HTMLDivElement>) => {
         dispatch(setEditMode(false))

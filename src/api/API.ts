@@ -7,7 +7,7 @@ const proxy = {
 
 }
 const configOMB = {
-    baseURL: proxy.anywhere,
+    baseURL: proxy.without,
 };
 const key = 'fa23d3a3';
 export let source: ReturnType<typeof axios.CancelToken.source>;
